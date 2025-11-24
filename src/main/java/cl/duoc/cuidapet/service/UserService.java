@@ -15,21 +15,22 @@ public class UserService {
     private final UserRepository userRepository;
 
     public User register(User user) {
-        if (user.getRole() == null || user.getRole().isBlank()) {
-            user.setRole("DUENO");
-        }
-        return userRepository.save(user);
+    if (user.getRole() == null) {
+        user.setRole("USER"); 
     }
-
-    public User validateLogin(String email, String rawPassword) {
+    return userRepository.save(user);
+}
+    // 🔹 Login dinámico
+    public User validateLogin(String email, String password) {
         User user = userRepository.findByEmail(email)
             .orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
-        if (!user.getPassword().equals(rawPassword)) {
-            throw new RuntimeException("Credenciales inválidas");
+        if (!user.getPassword().equals(password)) {
+            throw new RuntimeException("Contraseña incorrecta");
         }
         return user;
     }
 
+    // 🔹 CRUD básico
     public User create(User user) {
         return userRepository.save(user);
     }
@@ -56,3 +57,4 @@ public class UserService {
         userRepository.deleteById(id);
     }
 }
+

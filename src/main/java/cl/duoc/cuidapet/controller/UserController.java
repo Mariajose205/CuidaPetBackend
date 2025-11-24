@@ -23,10 +23,9 @@ import lombok.RequiredArgsConstructor;
 @RequestMapping("/users")
 @RequiredArgsConstructor
 @CrossOrigin(origins = "*")
-
 public class UserController {
-    
- private final UserService userService;
+
+    private final UserService userService;
 
     // 🔹 Registro
     @PostMapping("/register")
@@ -52,31 +51,27 @@ public class UserController {
             .build());
     }
 
-    // 🔹 Crear usuario (CRUD)
+    // 🔹 CRUD básico
     @PostMapping
     public ResponseEntity<User> create(@RequestBody User user) {
         return ResponseEntity.ok(userService.create(user));
     }
 
-    // 🔹 Listar todos
     @GetMapping
     public ResponseEntity<List<User>> getAll() {
         return ResponseEntity.ok(userService.getAll());
     }
 
-    // 🔹 Buscar por ID
     @GetMapping("/{id}")
     public ResponseEntity<User> getById(@PathVariable Long id) {
         return ResponseEntity.ok(userService.getById(id));
     }
 
-    // 🔹 Actualizar
     @PutMapping("/{id}")
     public ResponseEntity<User> update(@PathVariable Long id, @RequestBody User user) {
         return ResponseEntity.ok(userService.update(id, user));
     }
 
-    // 🔹 Eliminar
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> delete(@PathVariable Long id) {
         userService.delete(id);
